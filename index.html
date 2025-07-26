@@ -21,12 +21,12 @@
 </head>
 <body>
   <div class="container">
-    <h2>CCCD Form Responses</h2>
+    <h2>Form Responses 2</h2>
     <div id="cards-container">Loading data...</div>
   </div>
 
   <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/1YVVirvG5VZJBOjTUu_CSlzZhK0raTane80uGhBf8r24/export?format=csv&gid=28935173"; // put your CSV export link here
+    const csvUrl = "https://docs.google.com/spreadsheets/d/1YVVirvG5VZJBOjTUu_CSlzZhK0raTane80uGhBf8r24/export?format=csv&gid=28935173";
 
     fetch(csvUrl)
       .then(res => {
@@ -34,18 +34,23 @@
         return res.text();
       })
       .then(csvText => {
-        const container = document.getElementById("cards-container");
+        const container = document.getElementById('cards-container');
         container.innerHTML = "";
 
-        const parsed = Papa.parse(csvText, { header: true });
+        const results = Papa.parse(csvText, {
+          header: false,
+          skipEmptyLines: true,
+        });
 
-        parsed.data.forEach(row => {
-          // Adjust column names to match your sheet
-          const time = row['Timestamp'] || row['Time'];
-          let question = row['Question'] || row['Your Question'];
+        // Skip first row if it contains headers
+        for(let i = 1; i < results.data.length; i++) {
+          const row = results.data[i];
 
-          if (time && question) {
-            // Replace newlines with <br> to keep bullet formatting
+          // Column 0 = time, Column 1 = question
+          const time = row[0];
+          let question = row[1];
+
+          if(time && question) {
             question = question.replace(/\n/g, '<br>');
 
             container.innerHTML += `
@@ -57,11 +62,11 @@
               </div>
             `;
           }
-        });
+        }
       })
       .catch(err => {
-        console.error("Fetch error:", err);
-        document.getElementById("cards-container").innerHTML =
+        console.error("Error loading CSV:", err);
+        document.getElementById('cards-container').innerHTML =
           '<p class="text-danger">Failed to load data.</p>';
       });
   </script>
