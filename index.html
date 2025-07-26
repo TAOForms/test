@@ -50,7 +50,7 @@
 
           if(time && question) {
             question = question.replace(/\n/g, '<br>');
-            const footerHTML = footerText ? `<div class="card-footer">${footerText}</div>` : '';
+            const footerHTML = footerText ? `<div class="card-footer"><b>Answer:</b> ${footerText}</div>` : '';
 
             container.innerHTML += `
               <div class="card shadow-sm">
@@ -58,7 +58,7 @@
                 <div class="card-body">
                   <p>${question}</p>
                 </div>
-                <b>Answer:</b> ${footerHTML}
+                ${footerHTML}
               </div>
             `;
           }
