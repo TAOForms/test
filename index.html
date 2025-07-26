@@ -43,7 +43,7 @@
         });
 
         // Skip first row if it contains headers
-        for(let i = 1; i < results.data.length; i++) {
+        for(let i = results.data.length - 1; i >= 1; i--) {
           const row = results.data[i];
 
           // Column 0 = time, Column 1 = question
