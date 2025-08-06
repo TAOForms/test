@@ -57,7 +57,10 @@
             let time = row[0];
             time = time.replace(/\n/g, '<br>');
           let question = row[1];
-          const footerText = row[2];
+//          const footerText = row[2];
+            let footerText = row[2];
+            footerText = footerText ? footerText.replace(/\n/g, '<br>') : '';
+
 
           if(time && question) {
             question = question.replace(/\n/g, '<br>');
