@@ -49,9 +49,13 @@
           skipEmptyLines: true,
         });
 
-        for(let i = results.data.length - 1; i >= 1; i++) {
+//        for(let i = results.data.length - 1; i >= 1; i--) {
+        for (let i = 1; i < results.data.length; i++) {
+
           const row = results.data[i];
-          const time = row[0];
+//          const time = row[0];
+            let time = row[0];
+            time = time.replace(/\n/g, '<br>');
           let question = row[1];
           const footerText = row[2];
 
